@@ -1,0 +1,47 @@
+﻿@model GraduationProject.Models.Category
+@using Microsoft.AspNet.Identity
+@using GraduationProject.Models
+
+@{
+    ViewBag.Title = "Job Category";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+<h2 style="margin-top:100px;">@ViewBag.Title.</h2>
+@if (Request.IsAuthenticated)
+{
+    <hr />
+    var db = new ApplicationDbContext();
+    var UserID = User.Identity.GetUserId();
+    var CurrentUser = db.Users.Where(a => a.Id == UserID).SingleOrDefault();
+
+    @Html.AntiForgeryToken()
+    <div class="CategoryDetails">
+
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.CategoryName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CategoryName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CategoryDescription)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CategoryDescription)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @if (@CurrentUser.UserType == "Admins")
+        {
+            @Html.ActionLink("Edit", "Edit", new { id = Model.id }) 
+            <span>|</span>
+        }
+        @Html.ActionLink("Back To Mian Menu", "Index")
+    </p>
+}

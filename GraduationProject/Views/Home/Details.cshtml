@@ -1,0 +1,61 @@
+﻿@using Microsoft.AspNet.Identity
+@using GraduationProject.Models
+@model GraduationProject.Models.Job
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+<h2 style="margin-top:100px;">Details</h2>
+@{
+    var db = new ApplicationDbContext();
+    var UserID = User.Identity.GetUserId();
+    var CurrentUser = db.Users.Where(a => a.Id == UserID).SingleOrDefault();
+
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Category.CategoryName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Category.CategoryName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.JobTitle)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.JobTitle)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.JobContent)
+            </dt>
+
+            <dd>
+                @Html.Raw(HttpUtility.HtmlDecode(Html.DisplayFor(model => model.JobContent).ToString()))
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.JobImage)
+            </dt>
+
+            <dd>
+                <img src="~/Uploads/@Html.DisplayFor(model => model.JobImage)" class="thumbnail"
+                     style="height:100px; width:100px;" />
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @if (@CurrentUser.UserType == "Applicants")
+        {
+            @Html.ActionLink("Apply", "Apply", null, new { @class = "btn btn-success" });
+            <span>|</span>
+        }
+        @Html.ActionLink("Back to List", "Index", new { @class = "btn btn-default" })
+    </p>
+}

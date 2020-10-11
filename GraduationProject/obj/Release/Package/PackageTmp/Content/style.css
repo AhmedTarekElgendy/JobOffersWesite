@@ -1,0 +1,359 @@
+﻿@font-face {
+    font-family:myfont;
+    src:url('font\GE_SS_Two_Bold.woff')
+}
+
+
+@font-face {
+    font-family:myfont2;
+    src:url('font/DroidKufi-Regular.ttf')
+}
+* {
+    box-sizing:border-box;
+}
+body {
+        margin:0;
+    color:black;
+     /*  background-image:url('https://i1.wp.com/bullbayrods.com/wp-content/uploads/2016/06/HD-wood-background-website.jpg?fit=1200%2C675&ssl=1');
+     */
+           background-attachment:fixed;
+        
+       background-repeat:no-repeat;
+       background-size:cover;
+
+      
+}
+.navbar-default {
+    background: linear-gradient(to bottom, #721324,#9C394B) !important;
+    top: 0px;
+    z-index: 1000;
+    overflow: initial;
+    color: black;
+    border: none;
+}
+@media (max-width: 767px) {
+   
+    .navbar-default .navbar-nav > li > a:hover {
+        border-bottom-left-radius: 0% !important;
+        border-top-right-radius: 0% !important;
+    }
+
+    .navbar-default {
+    top: 0px;
+    background: linear-gradient(to bottom , #721324,#9C394B) !important;
+
+  }
+}
+
+  
+.navbar-default .navbar-nav>li>a {
+   color:white;
+    font-family: 'Lateef', cursive;
+    font-size:16px;
+}
+.navbar-default .navbar-nav > li > a:hover {
+    
+   background-color:rgba(255,255,255,.6);
+   color:black;
+   border-bottom-left-radius:20%;
+   border-top-right-radius:20%;
+    }
+
+.nav>li {
+    padding:5px;
+    position:relative;
+    display:block;
+   
+}
+
+.myfooter {
+      background: linear-gradient(to bottom ,#9C394B,#721324) !important;
+        padding-top:10PX;
+        color:white;
+        z-index:0;
+        margin-top:3%;
+        
+       
+}
+
+.subfooter {
+       
+        padding:10PX;
+        text-align:center;
+        background-color:black;
+}
+.myfooter h3, ul {
+        margin-bottom:20px;
+      
+}
+
+.HeaderImg {
+    position:relative;
+    top:60px;
+  /*  background-image:url('https://ak4.picdn.net/shutterstock/videos/12560294/thumb/1.jpg');*/
+    background-repeat:no-repeat;
+    background-size:cover;
+    height:700px;
+ 
+}
+.OverlayImg {
+    position:absolute;
+    top:0%;
+    left:0%;
+    height:100%;
+    width:100%;
+    background-color: rgba(36, 42, 51, 0.5);
+
+
+     
+}
+
+ .owl-dots {
+    display:none;
+}
+/*Start Slider*/
+.item
+{
+	width: 100%;
+	height: 700px;
+
+}
+.MYIMG
+{
+	width: 100%;
+	height: 100%;
+}
+
+/*End Slider*/
+@media (max-width:767px) {
+    .HeaderImg {
+        width:100%;
+        height:200px;
+         margin-top:50px;
+    }
+
+}
+.MyLogo {
+    width:50px;
+    height:50px;
+    margin-top:-14px;
+   
+}
+.sticky {
+ background: linear-gradient(to bottom , #721324,#9C394B) !important;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  transition:.5s;
+ 
+}
+
+
+/*Start Log in Form*/
+.LoginDiv {
+    width:50%;
+    margin-left:25%;
+    background-color: rgba(255,241,184,0.8);
+    
+ border-radius:50px;
+ 
+    margin-bottom:5%;
+    font-size:18px;
+    padding:50px;
+}
+
+.form-control {
+    border-radius:10px;
+   width:95%;
+
+}
+
+@media (max-width:767px) {
+    .LoginDiv {
+        width:100%;
+        margin-left:0%;
+    }
+}
+/*End Log in Form*/
+
+/*Start Register Page*/
+.RegisterDiv {
+    width:80%;
+    margin-left:10%;
+     background-color: rgba(255,241,184,0.8);
+     margin-bottom:5%;
+  border-radius:50px;
+   
+      padding:15px;
+
+}
+
+@media (max-width:767px) {
+    .RegisterDiv {
+        width:100%;
+        margin-left:0%;
+    }
+}
+/*End Register Page*/
+
+/*Start Home Page*/
+.jumbotron {
+   background-color: rgba(255,241,184,0.8);
+margin-top: 10%;
+}
+
+.panel-default > .panel-heading {
+   background-color: rgba(255,241,184,0.8);
+}
+/*End Home PAge*/
+
+
+/*Start Category*/
+.CategoryDiv {
+    width:90%;
+    margin-left:5%;
+     background-color: rgba(255,241,184,0.8);
+     margin-bottom:5%;
+  border-radius:50px;
+   
+      padding:20px;
+      font-size:16px;
+}
+
+.CategoryCreateNew {
+     width:90%;
+    margin-left:5%;
+     background-color: rgba(255,241,184,0.8);
+     margin-bottom:5%;
+  border-radius:50px;
+   
+      padding:25px;
+      font-size:16px;
+}
+#CategoryName, #CategoryDescription {
+    width:90%;
+}
+@media (max-width:767px) {
+    .CategoryDiv, .CategoryCreateNew {
+        width:100%;
+        margin-left:0%;
+        font-size:12px;
+        
+    }
+  
+}
+
+.CategoryDelete,.CategoryDetails,.CategoryEdit,.JobIndexDiv {
+    width:80%;
+    margin-top:5%;
+    margin-left:10%;
+      background-color: rgba(255,241,184,0.8);
+     margin-bottom:5%;
+     padding:20px;
+    border-radius:50px;
+   
+      font-size:16px;
+}
+@media (max-width:767px) {
+    .CategoryDelete ,.CategoryDetails,.CategoryEdit{
+        width:100%;
+        margin-left:0%;
+        font-size:14px;
+    }
+   
+}
+
+
+/*End Caegory*/
+
+/*Start Job*/
+.JobIndexDiv ,.JobCreate,.JobEditDiv,.JobDetailsDiv,.JobDeleteDiv{
+       width:80%;
+    margin-top:5%;
+    margin-left:10%;
+      background-color: rgba(255,241,184,0.8);
+     margin-bottom:5%;
+     padding:20px;
+     border-radius:50px;
+      font-size:16px;
+}
+@media (max-width:767px) {
+    .JobIndexDiv ,.JobCreate,.JobEditDiv,.JobDetailsDiv,.JobDeleteDiv{
+        width:100%;
+        margin-left:0%;
+        font-size:8px;
+    }
+    .container {
+        
+        margin-left:0%;
+        margin-right:0%;
+    }
+    table {
+        margin-left:-5%;
+    }
+
+
+}
+#JobContent, #JobTitle, #CategoryId {
+    width:90%;
+}
+.dl-horizontal dt {
+    margin-bottom:20px;
+}
+/*End Job*/
+
+/*Start Rules*//*and manage */ 
+.RulesTableDiv,.RolesAddDiv,.RolesDetailsDiv,.EditRolesDiv ,.RolesDeleteDiv,ManageDiv{
+     width:80%;
+    margin-top:5%;
+    margin-left:10%;
+      background-color: rgba(255,241,184,0.8);
+     margin-bottom:5%;
+     padding:35px;
+     border-radius:50px;
+      font-size:16px;
+}
+    .RolesAddDiv #Name,.EditRolesDiv #Name {
+        color:black;
+        width:80%;
+    }
+@media (max-width:767px) {
+    .RulesTableDiv, .RolesAddDiv,.RolesDetailsDiv,.EditRolesDiv,.RolesDeleteDiv {
+        width:100%;
+        margin-left:0%;
+        font-size:14px;
+    }
+}
+/*End Rules*/
+
+#searchName {
+    width: 130px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+    background-image: url('~/images/SearchIcon.png');
+    background-repeat: no-repeat;
+    background-position: 10px 10px;
+    padding: 12px 20px 12px 12px;
+    transition: width 0.4s ease-in-out;
+}
+    #searchName:focus {
+        width: 100%;
+    }
+
+.img-size{
+    font-size:90px;
+}
+
+.navbar-user {
+    padding:10px;
+    padding-bottom:0px;
+    width:350px;
+}
+
+@media (min-width: 992px)
+{
+    .col-md-3 {
+        width: 23%;
+    }
+}

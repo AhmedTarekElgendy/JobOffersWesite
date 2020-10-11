@@ -1,0 +1,116 @@
+﻿@using Microsoft.AspNet.Identity
+@using GraduationProject.Models
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoff" }))
+    {
+        var db = new ApplicationDbContext();
+        var UserID = User.Identity.GetUserId();
+        var CurrentUser = db.Users.Where(a => a.Id == UserID).SingleOrDefault();
+
+        @Html.AntiForgeryToken()
+        if (CurrentUser.UserType == "Admins" || db.Profiles.Count(p => p.UserId == UserID) > 0)
+        {
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-user"></span>
+                        <strong>Hi: @CurrentUser.UserName</strong>
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <div class="navbar-user">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <p class="text-center">
+                                            <span class="glyphicon glyphicon-user img-size"></span>
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <p class="text-right">
+                                            <strong>
+                                                @CurrentUser.UserName
+                                            </strong>
+                                        </p>
+                                        @if (@CurrentUser.UserType == "Publishers")
+                                        {
+                                            @Html.ActionLink("Publish New Job", "Create", "Jobs", null, new { @class = "btn btn-success btn-block" })
+                                            @Html.ActionLink("Your Jobs", "PublisherJobs", "Jobs", null, new { @class = "btn btn-success btn-block" })
+                                            @Html.ActionLink("Your Jobs Applicants", "GetJobByPublisher", "Home", null, new { @class = "btn btn-success btn-block" })
+                                        }
+                                        else if (@CurrentUser.UserType == "Applicants")
+                                        {
+                                            @Html.ActionLink("Your Applied Jobs", "GetJobUser", "Home", null, new { @class = "btn btn-success btn-block" })
+                                        }
+                                        else if (@CurrentUser.UserType == "Admins")
+                                        {
+                                            @Html.ActionLink("All Profiles", "Index", "Profiles", null, new { @class = "btn btn-success btn-block" })
+                                            @Html.ActionLink("Applicants Profile", "Index", "Profiles", new { type = "Applicants" }, new { @class = "btn btn-success btn-block" })
+                                            @Html.ActionLink("Publishers Profile", "Index", "Profiles", new { type = "Publishers" }, new { @class = "btn btn-success btn-block" })
+                                            @Html.ActionLink("Add New Category", "Create", "Category", null, new { @class = "btn btn-success btn-block" })
+                                        }
+                                        @{
+                                            int ID = 0;
+                                            try { ID = db.Profiles.Where(p => p.UserId == UserID).First().id; }
+                                            catch { }
+                                            if (@CurrentUser.UserType != "Admins" && ID != 0)
+                                            {
+                                                @Html.ActionLink("Edit Profile", "Details", "Profiles", new { id = ID }, new { @class = "btn btn-success btn-block" })
+                                            }
+                                            @Html.ActionLink("Edit Account", "EditProfile", "Account", null, new { @class = "btn btn-success btn-block" })
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+                            <li>
+                                <div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <p>
+                                                <a href="javascript:document.getElementById('logoff').submit()" class="btn btn-danger btn-block">Logout</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                    </ul>
+                </li>
+            </ul>
+        }
+        else
+        {
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="~/Account/Login">
+                        <i class="glyphicon glyphicon-user">&nbsp Log In</i>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="~/Account/Register">
+                        <i class="glyphicon glyphicon-lock">&nbsp Sign Up</i>
+                    </a>
+                </li>
+            </ul>
+        }
+    }
+}
+else
+{
+   <ul class="nav navbar-nav navbar-right">
+       <li>
+           <a href="~/Account/Login">
+               <i class="glyphicon glyphicon-user">&nbsp Log In</i>
+           </a>
+       </li>
+
+       <li>
+           <a href="~/Account/Register">
+               <i class="glyphicon glyphicon-lock">&nbsp Sign Up</i>
+           </a>
+       </li>
+   </ul>
+}

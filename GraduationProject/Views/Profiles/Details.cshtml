@@ -1,0 +1,144 @@
+﻿@model GraduationProject.Models.Profile
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,400i,600,600i,700" rel="stylesheet">
+
+<!-- Stylesheets -->
+<link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+<link rel="stylesheet" href="~/Content/font/font-awesome.min.css" />
+<link rel="stylesheet" href="~/Content/Profile/flaticon.css" />
+<link rel="stylesheet" href="~/Content/Profile/owl.carousel.css" />
+<link rel="stylesheet" href="~/Content/Profile/magnific-popup.css" />
+
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/style.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css?family=Lateef" rel="stylesheet">
+<link rel="stylesheet" href="~/Content/Profile/style.css" />
+<div style="margin-top:100px;">
+
+    <section class="hero-section spad">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-10 offset-xl-1">
+                    <div class="hero-text">
+                        <h2>@Html.DisplayFor(model => model.Name)</h2>
+                        <h3>@Html.DisplayFor(model => model.Title)</h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="hero-text">
+                                <p>@Html.Raw(HttpUtility.HtmlDecode(Html.DisplayFor(model => model.Bio).ToString()))</p>
+                            </div>
+                            <div class="hero-info">
+                                <h2>General Info</h2>
+                                <ul>
+                                    @if (Model.user.UserType == "Applicants")
+                                    {
+                                        <li><span>Date of Birth</span>@Html.DisplayFor(model => model.Birth)</li>
+                                    }
+                                    <li><span>Country</span>@Html.DisplayFor(model => model.Country)</li>
+                                    <li><span>City</span>@Html.DisplayFor(model => model.City)</li>
+                                    <li><span>Address</span>@Html.DisplayFor(model => model.Address)</li>
+                                    <li><span>E-mail</span>@Html.DisplayFor(model => model.Mail)</li>
+                                    <li><span>Other-Links</span>@Html.DisplayFor(model => model.OtherLinks)</li>
+                                    <li><span>Phone </span>@Html.DisplayFor(model => model.Phone)</li>
+                                    @if (Model.user.UserType == "Applicants")
+                                    {
+                                        <li><span>Gender </span>@Html.DisplayFor(model => model.Gender)</li>
+                                        <li><span>State </span>@Html.DisplayFor(model => model.State)</li>
+                                        <li><span>Military </span>@Html.DisplayFor(model => model.Military)</li>
+                                        <li><span>Education </span>@Html.DisplayFor(model => model.Education)</li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <figure class="hero-image">
+                                    <img src="~/Uploads/Profile/@Html.DisplayFor(model => model.img)" />
+                                </figure>
+                            </div>
+                            @if (Model.user.UserType == "Applicants")
+                            {
+                                <div class="row">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-xl-8 offset-xl-2">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-6">
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6">
+                                                        <div class="fact-box">
+                                                            <div class="fact-content">
+                                                                <img src="~/images/icon/1-w.png" alt="">
+                                                                <h2>@Model.Experience</h2>
+                                                                <p>Years of Experience</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    @if (Model.user.UserType == "Applicants")
+    {
+        <header class="header-section">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-8 text-md-right header-buttons">
+                        <a href="~/Uploads/CV/@Html.DisplayFor(model => model.CV)" class="site-btn">Download CV</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+    }
+        <!-- Resume section end -->
+        <!-- Extra section start -->
+        <!--====== Javascripts & Jquery ======-->
+        <script src="~/Scripts/jquery-2.1.4.min.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>
+        <script src="~/Scripts/owl.carousel.min.js"></script>
+        <script src="~/Scripts/magnific-popup.min.js"></script>
+        <script src="~/Scripts/circle-progress.min.js"></script>
+        <script src="~/Scripts/main.js"></script>
+    </div>
+<p style="margin-top:10px">
+    @using Microsoft.AspNet.Identity
+    @using GraduationProject.Models
+    @if (Request.IsAuthenticated)
+    {
+        var db = new ApplicationDbContext();
+        var UserID = User.Identity.GetUserId();
+        var CurrentUser = db.Users.Where(a => a.Id == UserID).SingleOrDefault();
+
+        if (UserID == Model.UserId || CurrentUser.UserType == "Admins")
+        {
+            @Html.ActionLink("Delete", "Delete", new { id = Model.id }, new { @class = "btn btn-primary" })
+        }
+        if (UserID == Model.UserId)
+        {
+            @Html.ActionLink("Edit", "Edit", new { id = Model.id }, new { @class = "btn btn-primary" })
+        }
+        if (CurrentUser.UserType == "Admins")
+        {
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary" })
+        }
+        else
+        {
+            @Html.ActionLink("Back to Home", "Index", "Home", null, new { @class = "btn btn-primary" })
+        }
+    }
+</p>

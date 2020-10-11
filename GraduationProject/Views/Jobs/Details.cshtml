@@ -1,0 +1,71 @@
+﻿@using Microsoft.AspNet.Identity
+@using GraduationProject.Models
+@model GraduationProject.Models.Job
+
+@{
+    ViewBag.Title = "Job Details";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+<h2 style="margin-top:100px;">@ViewBag.Title.</h2>
+@if (Request.IsAuthenticated)
+{
+    var db = new ApplicationDbContext();
+    var UserID = User.Identity.GetUserId();
+    var CurrentUser = db.Users.Where(a => a.Id == UserID).SingleOrDefault();
+
+    @Html.AntiForgeryToken()
+    <hr />
+
+    <div class="JobDetailsDiv">
+
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Category.CategoryName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Category.CategoryName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.JobTitle)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.JobTitle)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.JobContent)
+            </dt>
+
+            <dd>
+                @Html.Raw(HttpUtility.HtmlDecode(Html.DisplayFor(model => model.JobContent).ToString()))
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.JobImage)
+            </dt>
+
+            <dd>
+                <img src="~/Uploads/@Html.DisplayFor(model => model.JobImage)" class="thumbnail"
+                     style="height:100px; width:100px;" />
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @if (@CurrentUser.UserType == "Publishers" && UserID == Model.UserId)
+        {
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" })
+            <span>|</span>
+        }
+        else if (@CurrentUser.UserType == "Applicants")
+        {
+            @Html.ActionLink("Apply", "Apply","Home", new { id = Model.Id }, new { @class = "btn btn-primary" })
+            <span>|</span>
+        }
+        @Html.ActionLink("Back To Mian Menu", "Index")
+    </p>
+
+}

@@ -1,0 +1,39 @@
+﻿@model IEnumerable<GraduationProject.Models.JobsViewModel>
+
+@{
+    ViewBag.Title = "GetJobByPublisher";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+<h2 style="margin-top:100px;">Your Jobs Applicants</h2>
+@foreach (var gr in Model)
+{
+    @gr.JobTitle
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th>
+                Applicant Name
+            </th>
+            <th>
+                Message
+            </th>
+            <th>
+                Send Date
+            </th>
+        </tr>
+        @foreach (var item in gr.Items)
+        {
+            <tr>
+                <td>
+                    @item.user.UserName
+                </td>
+                <td>
+                    @item.Message
+                </td>
+                <td>
+                    @item.ApplyDate
+                </td>
+            </tr>
+        }
+    </table>
+
+}

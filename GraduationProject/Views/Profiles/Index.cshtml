@@ -1,0 +1,50 @@
+﻿@model IEnumerable<GraduationProject.Models.Profile>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+@if (ViewBag.Type == "Applicants" || ViewBag.Type == null)
+{
+    <div class="panel panel-info">
+        <div class="panel-heading"><h2>Applicant Profiles</h2></div>
+
+        <div class="row panel-body">
+            @foreach (var subitem in Model.Where(j => j.user.UserType == "Applicants"))
+            {
+                <div class="col-md-3 thumbnail" style="margin-left:20px; margin-bottom:20px; min-height:380px;">
+                    <img src="~/Uploads/Profile/@subitem.img" style="height:200px; width:200px; margin-top:10px;" />
+                    <h4>@Html.DisplayFor(modelitem => subitem.Title)</h4>
+                    <h3>@Html.DisplayFor(modelitem => subitem.Name)</h3>
+                    <h5>@Html.Raw(HttpUtility.HtmlDecode(Html.DisplayFor(model => subitem.Bio).ToString()))</h5>
+                    @Html.ActionLink("Details", "Details", new { id = subitem.id }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Delete", "Delete", new { id = subitem.id }, new { @class = "btn btn-primary" })
+                </div>
+            }
+        </div>
+    </div>
+}
+
+@if (ViewBag.Type == "Publishers" || ViewBag.Type == null)
+{
+    <div class="panel panel-info">
+        <div class="panel-heading"><h2>Publisher Profiles</h2></div>
+
+        <div class="row panel-body">
+            @foreach (var subitem in Model.Where(j => j.user.UserType == "Publishers"))
+            {
+                <div class="col-md-3 thumbnail" style="margin-left:20px; margin-bottom:20px; min-height:380px;">
+                    <img src="~/Uploads/Profile/@subitem.img" style="height:200px; width:200px; margin-top:10px;" />
+                    <h4>@Html.DisplayFor(modelitem => subitem.Title)</h4>
+                    <h3>@Html.DisplayFor(modelitem => subitem.Name)</h3>
+                    <h5>@Html.Raw(HttpUtility.HtmlDecode(Html.DisplayFor(model => subitem.Bio).ToString()))</h5>
+                    @Html.ActionLink("Details", "Details", new { id = subitem.id }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Delete", "Delete", new { id = subitem.id }, new { @class = "btn btn-primary" })
+                </div>
+            }
+        </div>
+    </div>
+}

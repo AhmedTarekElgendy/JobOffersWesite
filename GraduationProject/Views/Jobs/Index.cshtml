@@ -1,0 +1,47 @@
+﻿@using Microsoft.AspNet.Identity
+@using GraduationProject.Models
+@model IEnumerable<GraduationProject.Models.Category>
+
+@{
+    ViewBag.Title = "Current Jobs";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+<h2 style="margin-top:100px;">@ViewBag.Title</h2>
+@if (Request.IsAuthenticated)
+{
+    var db = new ApplicationDbContext();
+    var UserID = User.Identity.GetUserId();
+    var CurrentUser = db.Users.Where(a => a.Id == UserID).SingleOrDefault();
+
+    @Html.AntiForgeryToken()
+    <hr />
+    
+
+    foreach (var item in Model)
+    {
+        <div class="panel panel-info">
+            <div class="panel-heading"><h1>@Html.DisplayFor(modelitem => item.CategoryName)</h1></div>
+
+            <div class="row panel-body">
+                <h5>@Html.DisplayFor(modelitem => item.CategoryDescription)</h5>
+                @foreach (var subitem in item.Jobs)
+                {
+                    <div class="col-md-3 thumbnail" style="margin-left:20px; margin-bottom:20px; min-height:380px;">
+                        <img src="~/Uploads/@subitem.JobImage" style="height:200px; width:200px; margin-top:10px;" />
+                        <h3>@Html.DisplayFor(modelitem => subitem.JobTitle)</h3>
+                        <h5>@Html.Raw(HttpUtility.HtmlDecode(Html.DisplayFor(model => subitem.JobContent).ToString()))</h5>
+                        @if (@CurrentUser.UserType == "Publishers" && UserID == subitem.UserId)
+                        {
+                            @Html.ActionLink("Edit", "Edit", new { id = subitem.Id }, new { @class = "btn btn-primary" })
+                        }
+                        @Html.ActionLink("Details", "Details", new { id = subitem.Id }, new { @class = "btn btn-primary" })
+                        @if ((@CurrentUser.UserType == "Publishers" && UserID == subitem.UserId) || @CurrentUser.UserType == "Admins")
+                        {
+                            @Html.ActionLink("Delete", "Delete", new { id = subitem.Id }, new { @class = "btn btn-primary" })
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    }
+}

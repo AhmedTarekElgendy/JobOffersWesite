@@ -1,0 +1,112 @@
+﻿@model GraduationProject.Models.Job
+
+@{
+    ViewBag.Title = "Add New Job";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+<h2 style="margin-top:100px;">@ViewBag.Title.</h2>
+<script src="~/Scripts/ckeditor/ckeditor.js"></script>
+ <hr />
+@using (Html.BeginForm("Create", "Jobs", FormMethod.Post, new { enctype="multipart/form-data"}))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal JobCreate">
+        <div class="alert alert-danger" id="errorDiv" style="display:none;">
+          <span id="viewError"></span>
+      </div>
+
+       
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.JobTitle, new { @class = "control-label col-md-2" })
+            <div class="col-md-10 ">
+                @Html.EditorFor(model => model.JobTitle)
+                @Html.ValidationMessageFor(model => model.JobTitle)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.JobContent, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.JobContent, new { htmlAttributes = new { @class = "form-control",@id="JobContent"} })
+                @Html.ValidationMessageFor(model => model.JobContent)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.JobImage, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+               <input type="file" name="upload" id="JobImage" />
+                @Html.ValidationMessageFor(model => model.JobImage)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CategoryId, "Job Type", new { @class = "control-label col-md-2 " })
+            <div class="col-md-10 ">
+                @Html.DropDownList("CategoryId", String.Empty)
+                @Html.ValidationMessageFor(model => model.CategoryId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Add" class="btn btn-default" id="save"/>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back To Main Menu", "Index")
+</div>
+
+
+<script>
+    CKEDITOR.replace("JobContent");
+</script>
+
+
+
+@section Scripts{
+    <script>
+
+    $(function(){
+        
+            $("#save").click(function(){
+                if ($("#JobImage").val() == "") {
+                    $("#errorDiv").fadeIn();
+                    $("#viewError").append("Please complete empty fields");
+                    return false;
+                }
+
+                if ($("#MyImage").val() != "") {
+                    //check if iamge extension is valid 
+
+                    var fileName = document.getElementById("MyImage").value;
+                    var extensionImg = fileName.substr(fileName.lastIndexOf('.') + 1);
+                    var validExtension = ['jpg', 'jpeg', 'png', 'bmp', 'gif'];
+                    if ($.inArray(extensionImg, validExtension) == -1) {
+                        $("#errorDiv").fadeIn();
+                        $("#viewError").append("Please choose a correct image");
+                        return false;
+                    }
+
+                    // check the size of image 
+                    var myFileSize = document.getElementById("MyImage").files[0].size / 1024 / 1024;
+                    if (myFileSize > 5) {
+                        $("#errorDiv").fadeIn();
+                        $("#viewError").append("Please choose an image less than 5 mega byte");
+                        return false;
+                    }
+                }
+
+            });
+        });
+    
+</script>
+    }
+

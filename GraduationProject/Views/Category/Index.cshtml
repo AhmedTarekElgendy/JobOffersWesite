@@ -1,0 +1,63 @@
+﻿@model IEnumerable<GraduationProject.Models.Category>
+
+@{
+    ViewBag.Title = "Job Category Menu";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+<h2 style="margin-top:100px;">@ViewBag.Title.</h2>
+@using Microsoft.AspNet.Identity
+@using GraduationProject.Models
+@if (Request.IsAuthenticated)
+{
+    var db = new ApplicationDbContext();
+    var UserID = User.Identity.GetUserId();
+    var CurrentUser = db.Users.Where(a => a.Id == UserID).SingleOrDefault();
+
+    @Html.AntiForgeryToken()
+        <hr />
+        <div class="CategoryDiv">
+            @if (@CurrentUser.UserType == "Admins")
+            {
+                <p>
+                    @Html.ActionLink("Add New", "Create")
+                </p>
+            }
+                <table class="table">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CategoryName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CategoryDescription)
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CategoryName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CategoryDescription)
+                            </td>
+                            <td>
+                                @if (@CurrentUser.UserType == "Admins")
+                                {
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.id })
+                                    <span>|</span>
+                                }
+                                @Html.ActionLink("Details", "Details", new { id = item.id })
+                                @if (@CurrentUser.UserType == "Admins")
+                                {
+                                    <span>|</span>
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                                }
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+}
